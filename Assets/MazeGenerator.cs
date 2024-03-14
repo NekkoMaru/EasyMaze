@@ -1,10 +1,13 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using System.Linq;
+
 
 public class MazeGenerator : MonoBehaviour
 {
+    public static MazeGenerator Instance; // Статический экземпляр, чтобы получать доступ к классу из других скриптов
+
     [SerializeField]
     private MazeCell _mazeCellPrefab;
 
@@ -16,8 +19,13 @@ public class MazeGenerator : MonoBehaviour
 
     private MazeCell[,] _mazeGrid;
 
+    [SerializeField]
+    private GameObject _itemToFind;
+
     void Start()
     {
+        Instance = this; // Устанавливаем статический экземпляр
+
         _mazeGrid = new MazeCell[_mazeWidth, _mazeDepth];
 
         for (int x = 0; x < _mazeWidth; x++)
@@ -29,6 +37,9 @@ public class MazeGenerator : MonoBehaviour
         }
 
         GenerateMaze(null, _mazeGrid[0, 0]);
+
+        // Генерируем ключ в случайном месте в лабиринте
+        GenerateKey();
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -138,4 +149,31 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
+    private void GenerateKey()
+    {
+        // Выбираем случайные координаты в лабиринте для размещения ключа
+        int randomX = Random.Range(0, _mazeWidth);
+        int randomZ = Random.Range(0, _mazeDepth);
+
+        MazeCell randomCell = _mazeGrid[randomX, randomZ];
+        Instantiate(_itemToFind, randomCell.transform.position, Quaternion.identity);
+    }
+
+    public void DisappearMaze()
+    {
+        // Отключаем все ячейки лабиринта
+        foreach (MazeCell cell in _mazeGrid)
+        {
+            if (cell != null)
+            {
+                cell.gameObject.SetActive(false);
+            }
+        }
+
+        // Отключаем предмет, который нужно найти
+        if (_itemToFind != null)
+        {
+            _itemToFind.SetActive(false);
+        }
+    }
 }
