@@ -169,11 +169,5 @@ public class MazeGenerator : MonoBehaviour
                 cell.gameObject.SetActive(false);
             }
         }
-
-        // Отключаем предмет, который нужно найти
-        if (_itemToFind != null)
-        {
-            _itemToFind.SetActive(false);
-        }
     }
 }
