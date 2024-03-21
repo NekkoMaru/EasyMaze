@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - _mazeCellPrefab: {instanceID: 0}
-  - _itemToFind: {fileID: 150738866291510694, guid: e66a9dc8cc51a424198069816558f43f,
+  - _itemToFind: {fileID: 7806240348990236248, guid: e505b44140c4c3c45b00f02953ae4e2c,
       type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
